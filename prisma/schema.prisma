@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Game {
+  id          Int      @id @default(autoincrement())
+  playerName  String   @default("Anonymous")
+  timeSeconds Int
+  attempts    Int
+  score       Int      @default(0)
+  maxStreak   Int      @default(0)
+  difficulty  String   @default("easy")
+  mode        String   @default("normal")
+  won         Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([won, timeSeconds])
+  @@index([won, score])
+  @@index([won, maxStreak])
+}
